@@ -41,3 +41,13 @@ h1 {
 .task button {
   margin-top: 5px;
 }
+
+.card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 50%;
+  background-color: darkblue;
+}
