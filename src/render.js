@@ -1,6 +1,5 @@
 
 
-export function display (card,todos){
-    todos.innerHTML = ""
-    todos.appendChild(card)
+export function display (card,status,column){
+    column[status].append(card)
 }
