@@ -1,6 +1,6 @@
 
 export const task = []
-
+export let id = 0
 export function saveState (){
      localStorage.setItem("kanban_card",JSON.stringify(task))
 }
