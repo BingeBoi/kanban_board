@@ -23,3 +23,15 @@
 ### finally my kanban board works based on the status 
  - previously the status element was an input i changed it to dropdown now its much better
 
+# 20-03-26
+
+## remodeled my logic
+
+### DOM manipulation to statedriven rendering
+
+ - i knew this would eventually arrived and it did, the logic i created was an aboslute rookie, i wanted to be done with it , that lead me to creating manual DOM manipulation logic but eventually i turned it around and used state driven logic 
+
+### DOM element logic (rendering logic) vs state logic 
+
+ - State logic and DOM/render logic should never mix.
+ They communicate only through data, never direct DOM access.

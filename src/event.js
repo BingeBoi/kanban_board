@@ -22,7 +22,7 @@ export function add (addBtn,task,inp,column){
    
 }
 
-export function edit_event (card,obj,column){
+export function edit_event (task,card,obj,column){
 
     card.addEventListener("dblclick",()=>{
         if(card.querySelector('input') || card.querySelector('select')){
