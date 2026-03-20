@@ -8,26 +8,21 @@ export function add (addBtn,task,inp,column){
         if(inp.value === ""){
         return;
         }
-        
         const new_task = {
             "card_name":inp.value,
             "status": "todo",
             "id":getId()
         }
         task.push(new_task)
-        const status = new_task.status
+        display(task,column)
         
-        const card = card_maker(new_task)
-        card.dataset.id = new_task.id
-        edit_event(card,column)
-        display(card,status,column)
         inp.value = ""
         console.log(inp.value)
     })
    
 }
 
-export function edit_event (card,column){
+export function edit_event (card,obj,column){
 
     card.addEventListener("dblclick",()=>{
         if(card.querySelector('input') || card.querySelector('select')){
@@ -41,21 +36,17 @@ export function edit_event (card,column){
         
         input.addEventListener("keydown",(e)=>{
         if(e.key === "Enter"){
-            const id = card.dataset.id
-            const edited_status = select.value
-            const outp = outp_ele(inp_element,id)             
-            card.replaceChildren(outp)
-            display(card,edited_status,column)
+            
+            outp_ele(inp_element,obj)             
+            
+            display(task,column)
         }
             
         })
         select.addEventListener("change", () => {
-            const id = card.dataset.id
-            const edited_status = select.value
-
-            const outp = outp_ele(inp_element,id)
-            card.replaceChildren(outp)
-            display(card,edited_status,column)
+            outp_ele(inp_element,obj)             
+            
+            display(task,column)
         })
        
       
