@@ -15,6 +15,6 @@ export function loadState (){
     const save = localStorage.getItem("kanban_board")
 
     if(save){
-        task = JSON.parse("kanban_board")
+        task = JSON.parse(save)
     }
 }

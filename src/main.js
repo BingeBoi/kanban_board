@@ -1,5 +1,8 @@
-import { start_kanban } from "./event.js";
-import {task} from "./state.js";
+import { start_kanban,edit_event } from "./event.js";
+import { onStateChange } from "./render.js";
+import {task,loadState} from "./state.js";
+
+
 const inp = document.getElementById('taskInput')
 const addBtn = document.getElementById('addTaskBtn')
 
@@ -9,5 +12,10 @@ const addBtn = document.getElementById('addTaskBtn')
     done : document.getElementById('done')
 }
 
+
+loadState()
+
 start_kanban(addBtn,task,inp,column)
+
+onStateChange(task, column, edit_event)
 

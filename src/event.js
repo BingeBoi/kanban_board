@@ -1,6 +1,6 @@
-import { card_maker,inp_ele,outp_ele } from "./logic.js";
-import { display } from "./render.js";
-import { getId } from "./state.js";
+import { inp_ele,outp_ele } from "./logic.js";
+import { onStateChange } from "./render.js";
+import { getId,saveState } from "./state.js";
 
 export function add (addBtn,task,inp,column){
     
@@ -9,12 +9,12 @@ export function add (addBtn,task,inp,column){
         return;
         }
         const new_task = {
-            "card_name":inp.value,
+            "name":inp.value,
             "status": "todo",
             "id":getId()
         }
         task.push(new_task)
-        display(task,column)
+        onStateChange(task,column,edit_event)
         
         inp.value = ""
         console.log(inp.value)
@@ -38,18 +38,29 @@ export function edit_event (task,card,obj,column){
         if(e.key === "Enter"){
             
             outp_ele(inp_element,obj)             
-            
-            display(task,column)
+            saveState()
+            onStateChange(task,column,edit_event,delete_event)
         }
             
         })
         select.addEventListener("change", () => {
             outp_ele(inp_element,obj)             
-            
-            display(task,column)
+            saveState()
+            onStateChange(task,column,edit_event,delete_event)
         })
        
       
+    })
+}
+
+export function delete_event(btn,task,obj,column){
+    btn.addEventListener('click',()=>{
+        const index = task.indexOf(obj)
+        if (index !== -1) {
+            task.splice(index, 1)
+            saveState()
+            onStateChange(task,column,edit_event,delete_event)
+        }
     })
 }
 

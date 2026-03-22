@@ -1,7 +1,5 @@
 
 
-
-
 export function inp_ele(){
     const inp1 = document.createElement('input')
     const select = document.createElement('select')
