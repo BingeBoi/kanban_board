@@ -1,0 +1,53 @@
+body {
+  font-family: Arial;
+  background: #f4f4f4;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.controls {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.board {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.column {
+  background: white;
+  padding: 15px;
+  width: 250px;
+  border-radius: 8px;
+  min-height: 300px;
+}
+
+.column h2 {
+  text-align: center;
+}
+
+.task {
+  background: #e3e3e3;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+.task button {
+  margin-top: 5px;
+}
+
+.card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 50%;
+  background-color: orange;
+}
