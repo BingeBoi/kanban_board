@@ -1,4 +1,21 @@
+import { card_maker } from "./card.jsx";
+import { onDelete,edit_card } from "./event.js";
+import { getId } from "./state.jsx";
 
+export function addTask (tasks, setTasks, input, setInputs){        
+
+        if(input.trim() === "")return;
+        
+        const new_task = {
+            "name":input,
+            "status": "todo",
+            "id":getId(),
+            "isEditing":false
+        }
+        setTasks([...tasks,new_task])
+        setInputs("")
+        card_maker(new_task,onDelete,edit_card)
+    }
 
 export function inp_ele(){
     const inp1 = document.createElement('input')
