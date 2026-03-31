@@ -32,12 +32,15 @@
   margin-top: 5px;
 }
 
-.card {
+
+  .card {
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;   /* IMPORTANT */
+  align-items: flex-start;
   justify-content: center;
-  width: 50%;
-  height: 50%;
+  width: 100%;
   background-color: orange;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 6px;
 }

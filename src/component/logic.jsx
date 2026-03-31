@@ -1,5 +1,3 @@
-import { card_maker } from "./card.jsx";
-import { onDelete,edit_card } from "./event.js";
 import { getId } from "./state.jsx";
 
 export function addTask (tasks, setTasks, input, setInputs){        
@@ -14,39 +12,22 @@ export function addTask (tasks, setTasks, input, setInputs){
         }
         setTasks([...tasks,new_task])
         setInputs("")
-        card_maker(new_task,onDelete,edit_card)
     }
 
-export function inp_ele(){
-    const inp1 = document.createElement('input')
-    const select = document.createElement('select')
-
-    const options = ["todo","doing","done"]
-
-    options.forEach(status => {
-        const opt = document.createElement('option')
-        opt.value = status
-        opt.textContent = status
-        select.appendChild(opt)
-    })
-    
-    const inp_container = document.createElement('div')
-    inp_container.className = "inp_container"
-
-    inp_container.appendChild(inp1)
-    inp_container.appendChild(select)
-    
-    return inp_container;
+export function onDelete (setTasks,tasks,task) {
+    const filteredTask = tasks.filter(t => t.id !== task.id)
+    setTasks(filteredTask)
+}
+export function edit_card(setTasks,tasks,task){
+    const edited = tasks.map(t => t.id === task.id ? {...t , isEditing : true} : t)
+    setTasks(edited)
 }
 
-export function outp_ele(inp_container,obj){ 
-    const input = inp_container.querySelector('input')
-    const select = inp_container.querySelector('select')
-    
-    obj.name = input.value
-    obj.status = select.value
-
+export const saveEdit = (id,newName,status,tasks,setTasks) => {
+    setTasks(
+        tasks.map(task => 
+            task.id === id 
+            ? {...task,name : newName,status : status,isEditing : false} : task))
 }
-
 
 

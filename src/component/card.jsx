@@ -1,22 +1,46 @@
+import { saveEdit } from "./logic.jsx";
 
-
-export function card_maker(obj,onDelete,edit_card){
+export default function Card({obj,onDelete,onEdit,tasks,setTasks}){
 
     return (
         <> 
             <div 
             className="card"
-            onDoubleClick={()=>{
-                edit_card(obj.isEditing);
-            }}>
+            onDoubleClick={onEdit}>
             <div>
                 <h5>Card Name</h5>
-                <span>{obj.name}</span>
+                {obj.isEditing ? (
+                    <>
+                            <input 
+                                onBlur={(e) => {
+                                    const newName = e.target.value
+                                    saveEdit(obj.id, newName, obj.status,tasks,setTasks);
+                            }}/>
+                                   
+                    </>)
+                :
+                    <span>{obj.name}</span>
+                }
+                
             </div>
 
             <div>
                 <h5>Status</h5>
-                <span>{obj.status}</span>
+                          
+                {obj.isEditing ? (
+                    <> 
+                        <select onChange={(e) => {
+                                const status = e.target.value
+                                saveEdit(obj.id, obj.name, status,tasks,setTasks)
+                        }}>
+                            <option>todo</option>
+                            <option>doing</option>
+                            <option>done</option>
+                        </select>              
+                    </>)
+                :
+                    <span>{obj.status}</span>
+                }
             </div>
 
             <div>
