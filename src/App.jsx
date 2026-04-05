@@ -9,19 +9,36 @@ function App() {
   const [input,setInputs] = useState("");
   const [selectedId, setSelectedId] = useState(null);
   const [draggingId, setDraggingId] = useState(null);
+  const [hoveredColumn, setHoveredColumn] = useState(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   useEffect(() => {
+  let frame;
+
   const move = (e) => {
-    setMousePos({
-      x: e.clientX,
-      y: e.clientY
+    if (frame) return;
+
+    frame = requestAnimationFrame(() => {
+      setMousePos({
+        x: e.clientX,
+        y: e.clientY
+      });
+      frame = null;
     });
   };
 
   window.addEventListener("mousemove", move);
+  return () => window.removeEventListener("mousemove", move);
+}, []);
 
-    return () => window.removeEventListener("mousemove", move);
-  }, []);
+  const moveCard = (cardId, newColumn) => {
+    setTasks(prev =>
+      prev.map(task =>
+        task.id === cardId
+          ? { ...task, status: newColumn }
+          : task
+      )
+    );
+  };
   return (
     <>
       <h1>Kanban Board</h1>
@@ -40,7 +57,15 @@ function App() {
 
       <div className="board">
 
-        <div className="column" id="todo">
+        <div className={`column ${draggingId && hoveredColumn === "todo" ? "highlight" : ""}`}
+          onMouseEnter={() => setHoveredColumn("todo")}
+          onMouseLeave={() => setHoveredColumn(null)}
+          onMouseUp={() => {
+            if (draggingId) {
+              moveCard(draggingId, "todo");
+            }
+            setDraggingId(null);
+          }}>
           <h2>Todo</h2>
           <div className="task-list">
             {tasks.filter(task => task.status === "todo")
@@ -64,7 +89,15 @@ function App() {
           </div>
         </div>
 
-        <div className="column" id="doing">
+        <div className={`column ${draggingId && hoveredColumn === "doing" ? "highlight" : ""}`}
+          onMouseEnter={() => setHoveredColumn("doing")}
+          onMouseLeave={() => setHoveredColumn(null)}
+          onMouseUp={() => {
+            if (draggingId) {
+              moveCard(draggingId, "doing");
+            }
+            setDraggingId(null);
+          }}>
           <h2>Doing</h2>
           <div className="task-list">
             {tasks.filter(task => task.status === "doing")
@@ -86,7 +119,15 @@ function App() {
           </div>
         </div>
 
-        <div className="column" id="done">
+        <div className={`column ${draggingId && hoveredColumn === "done" ? "highlight" : ""}`}
+          onMouseEnter={() => setHoveredColumn("done")}
+          onMouseLeave={() => setHoveredColumn(null)}
+          onMouseUp={() => {
+            if (draggingId) {
+              moveCard(draggingId, "done");
+            }
+            setDraggingId(null);
+          }}>
           <h2>Done</h2>
           <div className="task-list">
             {tasks.filter(task => task.status === "done")

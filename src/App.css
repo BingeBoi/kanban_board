@@ -32,6 +32,12 @@
   border-radius: 5px;
 }
 
+.highlight {
+  background-color: rgba(0, 150, 255, 0.2);
+  border: 2px dashed #0096ff;
+  transition: 0.2s ease;
+}
+
 .task button {
   margin-top: 5px;
 }
@@ -39,13 +45,12 @@
 
   .card {
   display: flex;
+  text-align: center;
   flex-direction: column;   /* IMPORTANT */
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   width: 100%;
   background-color: orange;
-  padding: 10px;
-  margin: 10px 0;
   border-radius: 6px;
   
     

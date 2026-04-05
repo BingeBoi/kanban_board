@@ -7,14 +7,8 @@ export default function Card({obj,onDelete,onEdit,tasks,
         <> 
             <div 
             onDoubleClick={onEdit}
-            onMouseDown={() => {
-            if (selectedId === obj.id) {
-            setDraggingId(obj.id);
-            }
-            }}
-            onMouseUp={() => {
-                setDraggingId(null);
-                }}
+            onMouseDown={() => setDraggingId(obj.id)}
+            
 
            style={{
                 position: draggingId === obj.id ? "fixed" : "static",
@@ -22,7 +16,8 @@ export default function Card({obj,onDelete,onEdit,tasks,
                 left: draggingId === obj.id ? mousePos.x - 100 : "auto",
                 width: draggingId === obj.id ? "200px" : "100%",
                 opacity: draggingId === obj.id ? 0.6 : 1,
-                zIndex: draggingId === obj.id ? 1000 : "auto"
+                zIndex: draggingId === obj.id ? 1000 : "auto",
+                pointerEvents: draggingId === obj.id ? "none" : "auto"
             }}
             className={`card ${selectedId === obj.id ? "selected" : ""}`}
             onClick={()=> setSelectedId(obj.id)}
