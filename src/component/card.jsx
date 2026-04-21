@@ -1,13 +1,23 @@
 import { saveEdit } from "./logic.jsx";
 
 export default function Card({obj,onDelete,onEdit,tasks,
-    setTasks,selectedId,setSelectedId,draggingId,setDraggingId,mousePos}){
+    setTasks,selectedId,setSelectedId,draggingId,setDraggingId,mousePos,pendingDrag,
+  setPendingDrag}){
 
     return (
         <> 
             <div 
             onDoubleClick={onEdit}
-            onMouseDown={() => setDraggingId(obj.id)}
+            onMouseDown={(e) => {
+                e.preventDefault();
+                if (obj.isEditing) return;
+
+                setPendingDrag({
+                    id: obj.id,
+                    startX: e.clientX,
+                    startY: e.clientY
+                });
+            }}
             
 
            style={{
@@ -17,7 +27,8 @@ export default function Card({obj,onDelete,onEdit,tasks,
                 width: draggingId === obj.id ? "200px" : "100%",
                 opacity: draggingId === obj.id ? 0.6 : 1,
                 zIndex: draggingId === obj.id ? 1000 : "auto",
-                pointerEvents: draggingId === obj.id ? "none" : "auto"
+                pointerEvents: "auto",
+                cursor: draggingId === obj.id ? "grabbing" : "grab"
             }}
             className={`card ${selectedId === obj.id ? "selected" : ""}`}
             onClick={()=> setSelectedId(obj.id)}
