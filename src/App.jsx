@@ -1,7 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import Card from "./component/card.jsx";
-import { edit_card, onDelete,addTask } from "./component/logic.jsx";
+import { edit_card, onDelete,addTask } from "./component/taskActions.js";
 import { useEffect } from "react";
 import { useRef } from "react";
 function App() {
@@ -15,30 +15,23 @@ function App() {
   const [pendingDrag, setPendingDrag] = useState(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   
+
+
   useEffect(() => {
-  let frame;
-
   const move = (e) => {
-    if (frame) return;
+    const x = e.clientX;
+    const y = e.clientY;
 
-    frame = requestAnimationFrame(() => {
-      const x = e.clientX;
-      const y = e.clientY;
+    setMousePos({ x, y });
 
-      setMousePos({ x, y });
-
-      // 🔥 DRAG THRESHOLD LOGIC
-      if (pendingDrag && !draggingId) {
-        const dx = x - pendingDrag.startX;
-        const dy = y - pendingDrag.startY;
-
-        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
-          setDraggingId(pendingDrag.id);
-        }
+    if (pendingDrag && !draggingId) {
+      const dx = x - pendingDrag.startX;
+      const dy = y - pendingDrag.startY;
+      
+      if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+        setDraggingId(pendingDrag.id);
       }
-
-      frame = null;
-    });
+    }
   };
 
   window.addEventListener("mousemove", move);

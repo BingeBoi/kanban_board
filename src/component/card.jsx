@@ -1,4 +1,4 @@
-import { saveEdit } from "./logic.jsx";
+import { saveEdit } from "./taskActions.js";
 
 export default function Card({obj,onDelete,onEdit,tasks,
     setTasks,selectedId,setSelectedId,draggingId,setDraggingId,mousePos,pendingDrag,
@@ -9,9 +9,9 @@ export default function Card({obj,onDelete,onEdit,tasks,
             <div 
             onDoubleClick={onEdit}
             onMouseDown={(e) => {
-                e.preventDefault();
+                
                 if (obj.isEditing) return;
-
+                e.preventDefault();
                 setPendingDrag({
                     id: obj.id,
                     startX: e.clientX,
