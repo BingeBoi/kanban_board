@@ -5,9 +5,11 @@ import { edit_card, onDelete,addTask } from "./component/taskActions.js";
 import { useEffect } from "react";
 import { useRef } from "react";
 function App() {
-  const todoRef = useRef(null);
-  const doingRef = useRef(null);
-  const doneRef = useRef(null);
+
+
+  const todoRef = useRef(null);//
+  const doingRef = useRef(null);//
+  const doneRef = useRef(null);//
   const [tasks,setTasks] = useState([]);
   const [input,setInputs] = useState("");
   const [selectedId, setSelectedId] = useState(null);
@@ -16,16 +18,28 @@ function App() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   
 
+  async function fetchTasks() {
+  const res = await fetch("http://localhost:3000/tasks");
+  const data = await res.json();
+  setTasks(data);
+}
+  /*useEffect() runs a function after renders */
 
   useEffect(() => {
-  const move = (e) => {
-    const x = e.clientX;
-    const y = e.clientY;
+    fetchTasks();
+  }, []);
 
+  
+  /*Set Mouse Position,threshold logic to Start Dragging */
+  
+  useEffect(() => {
+  const move = (e) => {
+    const x = e.clientX;//assigns mousepos
+    const y = e.clientY;
     setMousePos({ x, y });
 
     if (pendingDrag && !draggingId) {
-      const dx = x - pendingDrag.startX;
+      const dx = x - pendingDrag.startX;//threshold variables 
       const dy = y - pendingDrag.startY;
       
       if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
@@ -38,20 +52,23 @@ function App() {
   return () => window.removeEventListener("mousemove", move);
 }, [pendingDrag, draggingId]);
 
+/*Card Proximity detection logic,mouseUp event behaviour*/
+
   useEffect(() => {
   const handleMouseUp = (e) => {
     if (!draggingId && !pendingDrag) return;
 
     const { clientX, clientY } = e;
 
-    const isInside = (ref) => {
+    
+    const isInside = (ref) => {//ref as in reference column 
       if (!ref.current) return false;
 
-      const rect = ref.current.getBoundingClientRect();
+      const rect = ref.current.getBoundingClientRect();//gets column boundary
       const padding = 50;
       return (
         clientX >= rect.left - padding &&
-        clientX <= rect.right + padding &&
+        clientX <= rect.right + padding &&//boundary detection logic
         clientY >= rect.top - padding &&
         clientY <= rect.bottom + padding
       );
@@ -74,6 +91,7 @@ function App() {
   window.addEventListener("mouseup", handleMouseUp);
   return () => window.removeEventListener("mouseup", handleMouseUp);
 }, [draggingId, pendingDrag]);
+
 
   const moveCard = (cardId, newColumn) => {
     setTasks(prev =>

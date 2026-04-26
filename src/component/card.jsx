@@ -56,7 +56,9 @@ export default function Card({obj,onDelete,onEdit,tasks,
                           
                 {obj.isEditing ? (
                     <> 
-                        <select onChange={(e) => {
+                        <select 
+                                value={obj.status}
+                                onChange={(e) => {
                                 const status = e.target.value
                                 saveEdit(obj.id, obj.name, status,tasks,setTasks)
                         }}>
